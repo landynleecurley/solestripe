@@ -107,8 +107,7 @@ export function Footer() {
             <Wordmark className="text-white" />
           </div>
           <p className="text-xs text-white/45">
-            © {new Date().getFullYear()} SoleStripe. A portfolio demo — original brand, not
-            affiliated with Foot Locker.
+            © {new Date().getFullYear()} SoleStripe. All rights reserved.
           </p>
           <div className="flex gap-2">
             {['VISA', 'MC', 'AMEX', 'PAY'].map((p) => (
