@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Search, ShoppingBag, User, Heart, Menu, X } from 'lucide-react';
 import { Wordmark } from './Wordmark';
 import { useCart } from '@/lib/cart';
@@ -22,11 +23,20 @@ export function Header() {
   const [q, setQ] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Portal target is only available on the client.
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    if (mobileOpen) window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
     };
   }, [mobileOpen]);
 
@@ -138,9 +148,12 @@ export function Header() {
         </div>
       )}
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
+      {/* Mobile menu — portaled to <body> so the header's backdrop-blur can't
+          confine it (backdrop-filter creates a containing block for fixed kids). */}
+      {mounted &&
+        mobileOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-60 md:hidden">
           <button
             aria-label="Close menu"
             onClick={() => setMobileOpen(false)}
@@ -186,8 +199,9 @@ export function Header() {
               </div>
             </div>
           </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </header>
   );
 }
