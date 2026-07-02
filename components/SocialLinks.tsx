@@ -1,19 +1,21 @@
-import Link from 'next/link';
-import { Instagram, TikTok, YouTube, Twitter } from 'developer-icons';
+'use client';
 
-// Official brand logos from the developer-icons package, seated in white
-// chips so every full-color mark stays legible on the dark footer.
+import Link from 'next/link';
+import { Icon } from '@iconify/react';
+
+// Official colored brand logos via Iconify (logos: set), in white chips so
+// each full-color mark stays legible on the dark footer.
 const SOCIALS = [
-  { Icon: Instagram, label: 'Instagram' },
-  { Icon: TikTok, label: 'TikTok' },
-  { Icon: YouTube, label: 'YouTube' },
-  { Icon: Twitter, label: 'Twitter' },
+  { icon: 'logos:instagram-icon', label: 'Instagram' },
+  { icon: 'logos:tiktok-icon', label: 'TikTok' },
+  { icon: 'logos:youtube-icon', label: 'YouTube' },
+  { icon: 'logos:twitter', label: 'Twitter' },
 ];
 
 export function SocialLinks({ className = '' }: { className?: string }) {
   return (
     <div className={`flex gap-2.5 ${className}`}>
-      {SOCIALS.map(({ Icon, label }) => (
+      {SOCIALS.map(({ icon, label }) => (
         <Link
           key={label}
           href="#"
@@ -21,7 +23,7 @@ export function SocialLinks({ className = '' }: { className?: string }) {
           title={label}
           className="grid h-9 w-9 place-items-center rounded-full bg-white shadow-sm transition hover:scale-110"
         >
-          <Icon size={20} />
+          <Icon icon={icon} height={20} />
         </Link>
       ))}
     </div>

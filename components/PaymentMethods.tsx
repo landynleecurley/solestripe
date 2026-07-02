@@ -1,30 +1,28 @@
-import { CreditCard, Wallet, Nfc, Smartphone } from 'lucide-react';
+'use client';
 
+import { Icon } from '@iconify/react';
+
+// Official colored brand logos via Iconify (logos: set), seated in white
+// chips so each mark stays legible on both light and dark backgrounds.
 const METHODS = [
-  { Icon: CreditCard, label: 'Credit & debit cards' },
-  { Icon: Wallet, label: 'Digital wallet' },
-  { Icon: Nfc, label: 'Tap to pay' },
-  { Icon: Smartphone, label: 'Mobile pay' },
+  { icon: 'logos:visa', label: 'Visa' },
+  { icon: 'logos:mastercard', label: 'Mastercard' },
+  { icon: 'logos:amex', label: 'American Express' },
+  { icon: 'logos:paypal', label: 'PayPal' },
+  { icon: 'logos:apple-pay', label: 'Apple Pay' },
 ];
 
-export function PaymentMethods({
-  variant = 'light',
-  className = '',
-}: {
-  variant?: 'light' | 'dark';
-  className?: string;
-}) {
-  const tile = variant === 'dark' ? 'border-white/20 text-white/70' : 'border-line text-muted';
+export function PaymentMethods({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex gap-2 ${className}`}>
-      {METHODS.map(({ Icon, label }) => (
+    <div className={`flex flex-wrap items-center gap-2 ${className}`}>
+      {METHODS.map(({ icon, label }) => (
         <span
           key={label}
           title={label}
           aria-label={label}
-          className={`grid h-7 w-10 place-items-center rounded-md border ${tile}`}
+          className="inline-flex h-7 items-center justify-center rounded-md bg-white px-2 shadow-sm ring-1 ring-black/5"
         >
-          <Icon className="h-4 w-5" strokeWidth={1.75} />
+          <Icon icon={icon} height={18} />
         </span>
       ))}
     </div>
