@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Minus, Plus, X, ShoppingBag, Lock, Truck } from 'lucide-react';
 import { useCart } from '@/lib/cart';
 import { SneakerImage } from '@/components/SneakerImage';
+import { PaymentMethods } from '@/components/PaymentMethods';
 import { money, shippingFor, taxFor, FREE_SHIP_THRESHOLD } from '@/lib/format';
 
 export default function CartPage() {
@@ -132,13 +133,7 @@ export default function CartPage() {
             >
               <Lock className="h-4 w-4" /> Secure Checkout
             </Link>
-            <div className="mt-4 flex justify-center gap-2">
-              {['VISA', 'MC', 'AMEX', 'PAY'].map((p) => (
-                <span key={p} className="rounded border px-2 py-1 text-[10px] font-semibold text-muted">
-                  {p}
-                </span>
-              ))}
-            </div>
+            <PaymentMethods className="mt-4 justify-center" />
           </div>
         </aside>
       </div>

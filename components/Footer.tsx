@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Wordmark } from './Wordmark';
+import { SocialLinks } from './SocialLinks';
+import { PaymentMethods } from './PaymentMethods';
 
 const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -87,16 +89,7 @@ export function Footer() {
             <h4 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-white">
               Connect
             </h4>
-            <div className="mt-4 flex gap-3">
-              {['IG', 'X', 'TT', 'YT'].map((s) => (
-                <span
-                  key={s}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-white/20 text-[11px] font-semibold text-white/70"
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
+            <SocialLinks className="mt-4" />
             <div className="mt-6 h-2 w-32 stripes rounded-full opacity-80" />
           </div>
         </div>
@@ -109,16 +102,7 @@ export function Footer() {
           <p className="text-xs text-white/45">
             © {new Date().getFullYear()} SoleStripe. All rights reserved.
           </p>
-          <div className="flex gap-2">
-            {['VISA', 'MC', 'AMEX', 'PAY'].map((p) => (
-              <span
-                key={p}
-                className="rounded border border-white/20 px-2 py-1 text-[10px] font-semibold text-white/60"
-              >
-                {p}
-              </span>
-            ))}
-          </div>
+          <PaymentMethods variant="dark" />
         </div>
       </div>
     </footer>
