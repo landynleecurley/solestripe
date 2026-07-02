@@ -3,27 +3,27 @@
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 
-// Official colored brand logos via Iconify (logos: set), in white chips so
-// each full-color mark stays legible on the dark footer.
+// Monochrome brand glyphs (currentColor). Uniform height, dim by default,
+// highlight on hover.
 const SOCIALS = [
-  { icon: 'logos:instagram-icon', label: 'Instagram' },
-  { icon: 'logos:tiktok-icon', label: 'TikTok' },
-  { icon: 'logos:youtube-icon', label: 'YouTube' },
-  { icon: 'logos:twitter', label: 'Twitter' },
+  { icon: 'fa6-brands:instagram', label: 'Instagram' },
+  { icon: 'fa6-brands:tiktok', label: 'TikTok' },
+  { icon: 'fa6-brands:youtube', label: 'YouTube' },
+  { icon: 'fa6-brands:x-twitter', label: 'X' },
 ];
 
 export function SocialLinks({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex gap-2.5 ${className}`}>
+    <div className={`flex items-center gap-4 ${className}`}>
       {SOCIALS.map(({ icon, label }) => (
         <Link
           key={label}
           href="#"
           aria-label={label}
           title={label}
-          className="grid h-9 w-9 place-items-center rounded-full bg-white shadow-sm transition hover:scale-110"
+          className="text-white/50 transition-colors hover:text-white"
         >
-          <Icon icon={icon} height={20} />
+          <Icon icon={icon} height={22} />
         </Link>
       ))}
     </div>

@@ -102,7 +102,7 @@ export function Footer() {
           <p className="text-xs text-white/45">
             © {new Date().getFullYear()} SoleStripe. All rights reserved.
           </p>
-          <PaymentMethods />
+          <PaymentMethods variant="dark" />
         </div>
       </div>
     </footer>

@@ -2,27 +2,35 @@
 
 import { Icon } from '@iconify/react';
 
-// Official colored brand logos via Iconify (logos: set), seated in white
-// chips so each mark stays legible on both light and dark backgrounds.
+// Monochrome brand glyphs (currentColor) via Iconify. Uniform height, dim by
+// default, highlight on hover.
 const METHODS = [
-  { icon: 'logos:visa', label: 'Visa' },
-  { icon: 'logos:mastercard', label: 'Mastercard' },
-  { icon: 'logos:amex', label: 'American Express' },
-  { icon: 'logos:paypal', label: 'PayPal' },
-  { icon: 'logos:apple-pay', label: 'Apple Pay' },
+  { icon: 'fa6-brands:cc-visa', label: 'Visa' },
+  { icon: 'fa6-brands:cc-mastercard', label: 'Mastercard' },
+  { icon: 'fa6-brands:cc-amex', label: 'American Express' },
+  { icon: 'fa6-brands:cc-paypal', label: 'PayPal' },
+  { icon: 'fa6-brands:cc-apple-pay', label: 'Apple Pay' },
 ];
 
-export function PaymentMethods({ className = '' }: { className?: string }) {
+export function PaymentMethods({
+  variant = 'light',
+  className = '',
+}: {
+  variant?: 'light' | 'dark';
+  className?: string;
+}) {
+  const tone =
+    variant === 'dark' ? 'text-white/45 hover:text-white' : 'text-ink/35 hover:text-ink';
   return (
-    <div className={`flex flex-wrap items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-3 ${className}`}>
       {METHODS.map(({ icon, label }) => (
         <span
           key={label}
           title={label}
           aria-label={label}
-          className="inline-flex h-7 items-center justify-center rounded-md bg-white px-2 shadow-sm ring-1 ring-black/5"
+          className={`transition-colors ${tone}`}
         >
-          <Icon icon={icon} height={18} />
+          <Icon icon={icon} height={26} />
         </span>
       ))}
     </div>
