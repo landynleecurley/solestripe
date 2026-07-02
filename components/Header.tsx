@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Search, ShoppingBag, User, Heart, Menu, X } from 'lucide-react';
 import { Wordmark } from './Wordmark';
@@ -26,9 +26,17 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [bagBounce, setBagBounce] = useState(false);
+  const prevCount = useRef(count);
 
   // Portal target is only available on the client.
   useEffect(() => setMounted(true), []);
+
+  // Bounce the bag when an item is added.
+  useEffect(() => {
+    if (count > prevCount.current) setBagBounce(true);
+    prevCount.current = count;
+  }, [count]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -108,7 +116,10 @@ export function Header() {
           >
             <Heart className="h-5 w-5" />
             {wishCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-white">
+              <span
+                key={wishCount}
+                className="badge-pop absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-white"
+              >
                 {wishCount}
               </span>
             )}
@@ -126,9 +137,15 @@ export function Header() {
             aria-label={`Cart, ${count} items`}
             className="relative grid h-10 w-10 place-items-center rounded-full hover:bg-black/5"
           >
-            <ShoppingBag className="h-5 w-5" />
+            <ShoppingBag
+              className={`h-5 w-5 ${bagBounce ? 'bag-bounce' : ''}`}
+              onAnimationEnd={() => setBagBounce(false)}
+            />
             {count > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-white">
+              <span
+                key={count}
+                className="badge-pop absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-white"
+              >
                 {count}
               </span>
             )}

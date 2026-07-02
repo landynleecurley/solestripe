@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, Truck, RotateCcw, ShieldCheck, Minus, Plus, Check } from 'lucide-react';
+import { Truck, RotateCcw, ShieldCheck, Minus, Plus, Check } from 'lucide-react';
 import { SneakerImage } from './SneakerImage';
 import { Stars } from './Stars';
+import { WishlistHeart } from './WishlistHeart';
 import { useCart } from '@/lib/cart';
-import { useWishlist } from '@/lib/wishlist';
 import { money } from '@/lib/format';
 import {
   isOnSale,
@@ -17,12 +17,11 @@ import {
 
 export function ProductDetail({ product }: { product: Product }) {
   const { add } = useCart();
-  const { has, toggle } = useWishlist();
-  const saved = has(product.slug);
   const [cw, setCw] = useState(0);
   const [size, setSize] = useState<number | null>(null);
   const [qty, setQty] = useState(1);
   const [err, setErr] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
 
   const colorway = product.colorways[cw];
   const sale = isOnSale(product);
@@ -34,6 +33,8 @@ export function ProductDetail({ product }: { product: Product }) {
       return;
     }
     add({ slug: product.slug, colorway: cw, size, qty });
+    setJustAdded(true);
+    window.setTimeout(() => setJustAdded(false), 1500);
   };
 
   return (
@@ -180,21 +181,23 @@ export function ProductDetail({ product }: { product: Product }) {
           <button
             type="button"
             onClick={addToBag}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:brightness-110"
-          >
-            Add to Bag · {money(product.price * qty)}
-          </button>
-          <button
-            type="button"
-            onClick={() => toggle(product.slug)}
-            aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'}
-            aria-pressed={saved}
-            className={`grid h-12 w-12 shrink-0 place-items-center rounded-full border transition hover:border-ink ${
-              saved ? 'border-accent' : ''
+            className={`flex flex-1 items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-wide text-white transition hover:brightness-110 ${
+              justAdded ? 'added-flash bg-green-600' : 'bg-accent'
             }`}
           >
-            <Heart className={`h-5 w-5 ${saved ? 'fill-accent text-accent' : ''}`} />
+            {justAdded ? (
+              <>
+                <Check className="h-4 w-4" /> Added to bag
+              </>
+            ) : (
+              `Add to Bag · ${money(product.price * qty)}`
+            )}
           </button>
+          <WishlistHeart
+            slug={product.slug}
+            className="grid h-12 w-12 shrink-0 place-items-center rounded-full border transition hover:border-ink"
+            iconClass="h-5 w-5"
+          />
         </div>
 
         {/* Perks */}
