@@ -1,26 +1,27 @@
 import Link from 'next/link';
-import { Camera, Music, Play, AtSign } from 'lucide-react';
+import { Instagram, TikTok, YouTube, Twitter } from 'developer-icons';
 
-// Generic glyphs (not brand logos) with accessible platform labels.
+// Official brand logos from the developer-icons package, seated in white
+// chips so every full-color mark stays legible on the dark footer.
 const SOCIALS = [
-  { Icon: Camera, label: 'Instagram', href: '#' },
-  { Icon: Music, label: 'TikTok', href: '#' },
-  { Icon: Play, label: 'YouTube', href: '#' },
-  { Icon: AtSign, label: 'X', href: '#' },
+  { Icon: Instagram, label: 'Instagram' },
+  { Icon: TikTok, label: 'TikTok' },
+  { Icon: YouTube, label: 'YouTube' },
+  { Icon: Twitter, label: 'Twitter' },
 ];
 
 export function SocialLinks({ className = '' }: { className?: string }) {
   return (
-    <div className={`flex gap-3 ${className}`}>
-      {SOCIALS.map(({ Icon, label, href }) => (
+    <div className={`flex gap-2.5 ${className}`}>
+      {SOCIALS.map(({ Icon, label }) => (
         <Link
           key={label}
-          href={href}
+          href="#"
           aria-label={label}
           title={label}
-          className="grid h-9 w-9 place-items-center rounded-full border border-white/20 text-white/70 transition hover:border-white/50 hover:text-white"
+          className="grid h-9 w-9 place-items-center rounded-full bg-white shadow-sm transition hover:scale-110"
         >
-          <Icon className="h-4 w-4" />
+          <Icon size={20} />
         </Link>
       ))}
     </div>
