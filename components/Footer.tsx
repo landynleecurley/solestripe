@@ -17,11 +17,11 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: 'Help',
     links: [
-      { label: 'Order Status', href: '#' },
-      { label: 'Shipping', href: '#' },
-      { label: 'Returns', href: '#' },
-      { label: 'Size Guide', href: '#' },
-      { label: 'Contact Us', href: '#' },
+      { label: 'Order Status', href: '/order-status' },
+      { label: 'Shipping', href: '/shipping' },
+      { label: 'Returns', href: '/returns' },
+      { label: 'Size Guide', href: '/size-guide' },
+      { label: 'Contact Us', href: '/contact' },
     ],
   },
   {
