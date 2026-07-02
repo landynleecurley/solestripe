@@ -27,11 +27,11 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: 'Company',
     links: [
-      { label: 'About', href: '#' },
-      { label: 'Careers', href: '#' },
-      { label: 'Store Locator', href: '#' },
-      { label: 'Gift Cards', href: '#' },
-      { label: 'Sustainability', href: '#' },
+      { label: 'About', href: '/about' },
+      { label: 'Careers', href: '/careers' },
+      { label: 'Store Locator', href: '/store-locator' },
+      { label: 'Gift Cards', href: '/gift-cards' },
+      { label: 'Sustainability', href: '/sustainability' },
     ],
   },
 ];
