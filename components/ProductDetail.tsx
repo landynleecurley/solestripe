@@ -5,6 +5,7 @@ import { Heart, Truck, RotateCcw, ShieldCheck, Minus, Plus, Check } from 'lucide
 import { SneakerImage } from './SneakerImage';
 import { Stars } from './Stars';
 import { useCart } from '@/lib/cart';
+import { useWishlist } from '@/lib/wishlist';
 import { money } from '@/lib/format';
 import {
   isOnSale,
@@ -16,6 +17,8 @@ import {
 
 export function ProductDetail({ product }: { product: Product }) {
   const { add } = useCart();
+  const { has, toggle } = useWishlist();
+  const saved = has(product.slug);
   const [cw, setCw] = useState(0);
   const [size, setSize] = useState<number | null>(null);
   const [qty, setQty] = useState(1);
@@ -183,10 +186,14 @@ export function ProductDetail({ product }: { product: Product }) {
           </button>
           <button
             type="button"
-            aria-label="Add to wishlist"
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-full border transition hover:border-ink"
+            onClick={() => toggle(product.slug)}
+            aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'}
+            aria-pressed={saved}
+            className={`grid h-12 w-12 shrink-0 place-items-center rounded-full border transition hover:border-ink ${
+              saved ? 'border-accent' : ''
+            }`}
           >
-            <Heart className="h-5 w-5" />
+            <Heart className={`h-5 w-5 ${saved ? 'fill-accent text-accent' : ''}`} />
           </button>
         </div>
 

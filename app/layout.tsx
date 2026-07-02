@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Oswald } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/lib/cart';
+import { WishlistProvider } from '@/lib/wishlist';
 import { PromoBar } from '@/components/PromoBar';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -32,13 +33,15 @@ export default function RootLayout({
       className={`${inter.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-ink">
-        <CartProvider>
-          <PromoBar />
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <CartDrawer />
-        </CartProvider>
+        <WishlistProvider>
+          <CartProvider>
+            <PromoBar />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <CartDrawer />
+          </CartProvider>
+        </WishlistProvider>
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom';
 import { Search, ShoppingBag, User, Heart, Menu, X } from 'lucide-react';
 import { Wordmark } from './Wordmark';
 import { useCart } from '@/lib/cart';
+import { useWishlist } from '@/lib/wishlist';
 
 const NAV: { label: string; href: string; accent?: boolean }[] = [
   { label: "Men's", href: '/shop?category=men' },
@@ -19,6 +20,7 @@ const NAV: { label: string; href: string; accent?: boolean }[] = [
 
 export function Header() {
   const { count, open } = useCart();
+  const { count: wishCount } = useWishlist();
   const router = useRouter();
   const [q, setQ] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -100,14 +102,19 @@ export function Header() {
             <Search className="h-5 w-5" />
           </button>
           <Link
-            href="#"
-            aria-label="Wishlist"
-            className="hidden h-10 w-10 place-items-center rounded-full hover:bg-black/5 sm:grid"
+            href="/wishlist"
+            aria-label={`Wishlist, ${wishCount} saved`}
+            className="relative hidden h-10 w-10 place-items-center rounded-full hover:bg-black/5 sm:grid"
           >
             <Heart className="h-5 w-5" />
+            {wishCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-white">
+                {wishCount}
+              </span>
+            )}
           </Link>
           <Link
-            href="#"
+            href="/account"
             aria-label="Account"
             className="hidden h-10 w-10 place-items-center rounded-full hover:bg-black/5 sm:grid"
           >
@@ -183,14 +190,14 @@ export function Header() {
             <div className="mt-auto border-t p-4">
               <div className="flex gap-3">
                 <Link
-                  href="#"
+                  href="/account"
                   onClick={() => setMobileOpen(false)}
                   className="flex flex-1 items-center justify-center gap-2 rounded-full border py-3 text-sm font-semibold"
                 >
                   <User className="h-4 w-4" /> Account
                 </Link>
                 <Link
-                  href="#"
+                  href="/wishlist"
                   onClick={() => setMobileOpen(false)}
                   className="flex flex-1 items-center justify-center gap-2 rounded-full border py-3 text-sm font-semibold"
                 >

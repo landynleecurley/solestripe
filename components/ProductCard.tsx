@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { Heart } from 'lucide-react';
 import { SneakerImage } from './SneakerImage';
 import { Stars } from './Stars';
 import { money } from '@/lib/format';
+import { useWishlist } from '@/lib/wishlist';
 import { isOnSale, discountPct, type Badge, type Product } from '@/lib/products';
 
 const BADGE_STYLES: Record<Badge, string> = {
@@ -16,11 +18,22 @@ const BADGE_STYLES: Record<Badge, string> = {
 
 export function ProductCard({ product }: { product: Product }) {
   const [cw, setCw] = useState(0);
+  const { has, toggle } = useWishlist();
   const sale = isOnSale(product);
+  const saved = has(product.slug);
   const colorway = product.colorways[cw] ?? product.colorways[0];
 
   return (
-    <div className="group flex flex-col">
+    <div className="group relative flex flex-col">
+      <button
+        type="button"
+        onClick={() => toggle(product.slug)}
+        aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'}
+        aria-pressed={saved}
+        className="absolute right-3 top-3 z-20 grid h-8 w-8 place-items-center rounded-full bg-white/90 shadow-sm backdrop-blur transition hover:bg-white"
+      >
+        <Heart className={`h-4 w-4 ${saved ? 'fill-accent text-accent' : 'text-ink'}`} />
+      </button>
       <Link href={`/product/${product.slug}`} className="block">
         <div className="relative overflow-hidden rounded-2xl border bg-[#f3f3f5]">
           <div className="absolute left-3 top-3 z-10 flex flex-col gap-1">
